@@ -4,6 +4,11 @@ const dotenv = require('dotenv'); // Para manejar configuraciones sencibles (com
 const app = express() // Crear la app de Express
 const authRoutes = require('./routes/authRoutes')
 const db = require('./db')
+const createPatients = require('./routes/createPatients')
+const getPatients = require('./routes/getPatients')
+const putPatients = require('./routes/putPatients')
+
+
 
 
 dotenv.config(); // Configurar variables de entorno
@@ -25,52 +30,21 @@ app.listen(PORT, () => {
 app.use('/api', authRoutes);
 
 
+// Usar la ruta post para crear paciente
+
+app.use(createPatients)
 
 
 
-// Ruta para obtener todos los pacientes
-app.get('/pacientes', (req, res) => {
-    const query = 'SELECT * FROM pacientes';
-    db.query(query, (err, results) => {
-        if (err) {
-            console.error(err);
-            res.status(500).json({ error: 'Error al obtener pacientes' });
-        } else {
-            res.json(results);
-        }
-    });
-});
+// Usar la ruta para traer pacientes
+
+app.use(getPatients)
 
 
-app.post('/crearPaciente', (req,res) => {
 
+// Usar la ruta para actualizar pacientes
 
-const {
-        nombre,
-        apellido,
-        fecha,
-        hora,
-        tipo_estudio,
-        valor_estudio,
-        estado_pago,
-        forma_pago,
-        fecha_pago,
-        estado_fc
-
-} = req.body;
-
-
-const query = `INSERT INTO pacientes (nombre, apellido, fecha, hora, tipo_estudio, valor_estudio, estado_pago, forma_pago, fecha_pago, estado_fc)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-
-db.query(query, [nombre, apellido, fecha, hora, tipo_estudio, valor_estudio, estado_pago, forma_pago, fecha_pago, estado_fc], (err, result) => {
-    if (err) {
-      console.error("Error al insertar en la base de datos:", err);
-      return res.status(500).send("Hubo un error al guardar los datos.");
-    }
-    res.status(200).send("Datos guardados correctamente.");
-  });
-})
+app.use(putPatients)
 
 
 

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 
 
@@ -97,6 +98,11 @@ window.location.reload()
 <input type="text" value={paciente.estado_fc} placeholder='Estado Factura' onChange={(e) => { setPaciente({...paciente, estado_fc: e.target.value}) }} required />
 
 <button onClick={agregarPaciente}>Agregar Paciente</button>
+
+
+
+
+
 </div>
 
 
@@ -114,6 +120,10 @@ window.location.reload()
     <p key={i}>{p.forma_pago} </p>
     <p key={i}>{p.fecha_pago} </p>
     <p key={i}>{p.estado_fc} </p>
+                    <button>
+                        <Link to={`/actualizarPaciente/${p.id}`}>Actualizar</Link>
+                    </button>
+
   </div>
  
 ))}

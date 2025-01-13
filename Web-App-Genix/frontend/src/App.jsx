@@ -6,7 +6,7 @@ import Caja from '../pages/Caja';
 import GestionDePacientes from '../pages/GestionDePacientes';
 import Facturacion from '../pages/Facturacion';
 import './App.css'
-
+import ActualizarPacientes from './ActualizarPacientes'
 
 
 function App() {
@@ -27,6 +27,7 @@ function App() {
 <Route path="/dashboard/facturacion" element={<Facturacion />} />
 <Route path="/dashboard/caja" element={<Caja />} />
 
+<Route path="/actualizarPaciente/:id" element={<ActualizarPacientes />} />
 
 
 
