@@ -11,10 +11,10 @@ router.post('/login', (req, res) => {
 
     if (username === 'admin' && password === '39001585') {
 
-        res.json({ message: 'Login exitoso', token: 'face-jwt-token' })
+        res.json({ succes: true, message: 'Login exitoso'})
     } else {
 
-        res.status(401).json({ message: 'Credenciales incorrectas' })
+        res.status(401).json({ succes: false,  message: 'Credenciales incorrectas' })
     }
 
 })

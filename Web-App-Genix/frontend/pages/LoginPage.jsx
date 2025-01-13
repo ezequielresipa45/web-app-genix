@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+
+
 
 function LoginPage() {
 
@@ -6,11 +9,13 @@ function LoginPage() {
 
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
 
     // MANEJO DEL ENVÍO DEL FORMULARIO
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
 
 
         e.preventDefault();
@@ -21,26 +26,34 @@ function LoginPage() {
         const loginData = { username, password };
 
         // Llamar a la API
-        fetch('http://localhost:5000/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(loginData)
-        })
-            .then((response) => {
-                if (response.ok) {
-                    return response.json();
 
-                } else { throw new Error('Credenciales incorrectas') };
-            }).then((data) => {
-                alert('¡Login Exitoso');
-                console.log(data)
-            })
-            .catch((error) => {
-                alert(error.message)
-            })
+try {
+    const response = await fetch('http://localhost:5001/api/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(loginData)
+    });
 
+    const data = await response.json();
+
+       if(response.ok){
+
+        localStorage.setItem('isAuthenticated', 'true');
+        navigate('/dashboard')
+       }else{
+        setError(data.message)
+
+       }
+    
+} catch (error) {
+
+    console.error('Error:', error);
+    setError('Hubo un problema al intentar iniciar sesión.');
+    
+    
+}
 
     }
 
@@ -58,6 +71,7 @@ function LoginPage() {
                 <input type="text" value={username} placeholder='Usuario' onChange={(e) => { setUserName(e.target.value) }} required />
                 <input type="password" placeholder='Ingrese la contraseña' value={password} onChange={(e) => { setPassword(e.target.value) }} required />
                 <button type='submit'>Ingresar</button>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
             </form>
 
         </div>
