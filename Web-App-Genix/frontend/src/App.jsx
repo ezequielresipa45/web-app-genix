@@ -11,9 +11,6 @@ import './App.css'
 
 function App() {
 
-// Autenticación
-const isAuthenticated = () => localStorage.getItem('isAuthenticated') === 'true';
-
   return (
     <Router>
  
