@@ -3,6 +3,9 @@ import styles from './facturacion.module.css'
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFileInvoiceDollar, faCircleArrowLeft   } from '@fortawesome/free-solid-svg-icons';
+
 
 
 function Facturacion() {
@@ -11,6 +14,13 @@ function Facturacion() {
   const [facturacionGenixTotal, setFacturacionGenixTotal] = useState(0)
   const [facturacionMMCTotal, setFacturacionMMCTotal] = useState(0)
 
+
+
+  const [facturacionGenixPesos, setFacturacionGenixPesos] = useState(0)
+  const [facturacionMMCPesos, setFacturacionMMCPesos] = useState(0)
+
+  const [facturacionGenixDolares, setFacturacionGenixDolares] = useState(0)
+  const [facturacionMMCDolares, setFacturacionMMCDolares] = useState(0)
 
 
   const [facturas, setFacturas] = useState(null)
@@ -72,16 +82,23 @@ function Facturacion() {
       setFacturas(facturasConNumeros)
       setSortedFacturas(facturasConNumeros); // Sincroniza con el estado ordenado
 
-      const totalGenix = facturasConNumeros.reduce((sum, factura) => factura.centro === "GENIX" ? sum + factura.importe_facturado : sum, 0);
+      const totalGenix = facturasConNumeros.reduce((sum, factura) => factura.centro === "GENIX" && factura.forma_pago !== "DOLARES" ? sum + factura.importe_facturado : sum, 0);
       setFacturacionGenixTotal(totalGenix);
 
-
-      const totalMMC = facturasConNumeros.reduce((sum, factura) => factura.centro === "MMC" ? sum + factura.importe_facturado : sum, 0);
+      const totalMMC = facturasConNumeros.reduce((sum, factura) => factura.centro === "MMC" && factura.forma_pago !== "DOLARES" ? sum + factura.importe_facturado : sum, 0);
       setFacturacionMMCTotal(totalMMC);
 
+      const totalGenixPesos = facturasConNumeros.reduce((sum,factura)=>factura.centro === "GENIX" && factura.forma_pago === "EFECTIVO" ? sum + factura.importe_facturado : sum,0)
+      setFacturacionGenixPesos(totalGenixPesos);
 
+      const totalMMCPesos = facturasConNumeros.reduce((sum,factura)=>factura.centro === "MMC" && factura.forma_pago === "EFECTIVO" ? sum + factura.importe_facturado : sum,0)
+      setFacturacionMMCPesos(totalMMCPesos);
 
+      const totalGenixDolares = facturasConNumeros.reduce((sum,factura)=>factura.centro === "GENIX" && factura.forma_pago === "DOLARES" ? sum + factura.importe_facturado : sum,0)
+      setFacturacionGenixDolares(totalGenixDolares);
 
+      const totalMMCDolares = facturasConNumeros.reduce((sum,factura)=>factura.centro === "MMC" && factura.forma_pago === "DOLARES" ? sum + factura.importe_facturado : sum,0)
+      setFacturacionMMCDolares(totalMMCDolares);
 
 
 
@@ -92,12 +109,68 @@ function Facturacion() {
 
   }, [])
 
-  console.log(facturas)
+
+
+  const currentDate = new Date();
+const monthName = new Intl.DateTimeFormat('es-ES', { month: 'long' }).format(currentDate).toUpperCase();
+
+
+
+
+
 
   return (
     <div className={styles.containerFacturacion}>
 
-      <h2>Tabla de Facturacion</h2>
+
+<div className={styles.containerTitulo}>
+    <a href="/dashboard"><FontAwesomeIcon icon={faCircleArrowLeft} /> Atras</a>
+
+      
+      <h2><FontAwesomeIcon icon={faFileInvoiceDollar} /> Tabla de Facturacion</h2>
+
+
+</div>
+
+
+
+
+<div className={styles.footerFact}>
+
+
+<div>
+  <p>Total Facturado {monthName}</p>
+  <p>Genix</p>
+  <p>{new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionGenixTotal)}</p>
+  <p>Total Efectivo: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionGenixPesos)}</p>
+  <p>Total Dolares: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(facturacionGenixDolares)}</p>
+</div>
+
+<p>VER COMO HACER PARA GUARDAR LAS FACTURACIONES MENSUALES linea 149</p>
+<div>
+  <p>Total Facturado {monthName}</p>
+  <p>MMC</p>
+  <p>{new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionMMCTotal)} </p>
+  <p>Total Efectivo: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionMMCPesos)}</p>
+  <p>Total Dolares: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(facturacionMMCDolares)}</p>
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
 
       <div className={styles.containerModuleFacturacion}>
 
@@ -107,23 +180,23 @@ function Facturacion() {
             onClick={() => handleSort('fecha_emision')}
             style={{ cursor: 'pointer' }}
           >
-            FECHA EMISIÓN {sortField === 'fecha_emision' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}
+            Fecha Emisión {sortField === 'fecha_emision' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}
           </p>
-          <p>N° DE FACTURA</p>
+          <p>N° De Factura</p>
           <p
             onClick={() => handleSort('paciente')}
             style={{ cursor: 'pointer' }}
           >
-            PACIENTE {sortField === 'paciente' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}
+            Paciente {sortField === 'paciente' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}
           </p>
-          <p>TIPO DE ESTUDIO</p>
-          <p>IMPORTE </p>
-          <p>FORMA DE PAGO</p>
+          <p>Tipo De Estudio</p>
+          <p>Importe </p>
+          <p>Forma De Pago</p>
           <p
             onClick={() => handleSort('centro')}
             style={{ cursor: 'pointer' }}
           >
-            CENTRO {sortField === 'centro' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}
+            Centro {sortField === 'centro' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}
           </p>
 
         </div>
@@ -136,11 +209,12 @@ function Facturacion() {
 
           <div className={styles.containerGetFact}>
 
-<p>{item.fecha_emision.toLocaleDateString('es-AR')}</p> {/* Formatea la fecha */}
+            <p>{item.fecha_emision.toLocaleDateString('es-AR')}</p> {/* Formatea la fecha */}
             <p>{item.numero_fc}</p>
             <p>{item.paciente}</p>
             <p>{item.tipo_estudio}</p>
-            <p>{new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(item.importe_facturado)}</p>
+            <p>{item.forma_pago === "DOLARES" ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(item.importe_facturado)
+                 :new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(item.importe_facturado)}</p>
             <p>{item.forma_pago}</p>
             <p>{item.centro}</p>
 
@@ -180,18 +254,7 @@ function Facturacion() {
 
 
 
-      <div className={styles.footerFact}>
 
-
-
-        <p>Total Facturado Genix: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionGenixTotal)} </p>
-        <p>Total Facturado MMC: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionMMCTotal)} </p>
-
-
-
-
-
-      </div>
 
 
 
