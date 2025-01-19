@@ -1,0 +1,34 @@
+.container_nav{
+
+
+
+    ul {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        list-style-type: none;
+    }
+
+    ul li a {
+        color: black;
+        font-weight: 500;
+        color: black;
+        text-decoration: inherit;
+        text-transform: uppercase;
+    }
+}
+
+.containerPacientesHoy{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+
+.containerPacientesHoy{
+    p{
+        background-color: red;
+        width: 8rem;
+    }
+}

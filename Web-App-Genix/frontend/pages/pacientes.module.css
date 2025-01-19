@@ -1,0 +1,150 @@
+.containerPadre {
+    background-color: rgb(221, 235, 244);
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+
+
+}
+
+
+.containerButtonyH1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    padding: 1rem;
+
+    h1 {
+        margin: 0;
+    }
+}
+
+
+
+a {
+    font-weight: 500;
+    color: white;
+    text-decoration: inherit;
+}
+
+
+
+
+.containerPacientesPadre {
+    width: 90%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: max-content;
+
+    padding: 1rem;
+    background-color: white;
+    border-radius: .5rem;
+}
+
+
+
+.container_pacientes {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .2rem;
+    width: 100%;
+    text-align: left;
+    height: 2.5rem;
+
+    p {
+
+        display: flex;
+        align-content: center;
+        width: 8%;
+        /* background-color: red; */
+        text-transform: uppercase;
+        text-align: left;
+    }
+
+
+
+
+    p:nth-child(4) {
+        width: 3%
+    }
+
+    p:nth-child(5) {
+        width: 12%
+    }
+
+
+
+
+
+
+}
+
+
+.container_pacientes:nth-child(even) {
+    background-color: rgb(230, 239, 245);
+
+
+}
+
+
+.containerButtons {
+    width: 12rem;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 1rem;
+
+
+button:nth-child(1){
+    background-color: rgb(107, 132, 195);
+}
+
+button:nth-child(2){
+    background-color: rgb(196, 96, 96);
+}
+
+
+
+}
+
+
+.container_tabla {
+    color: black;
+    display: flex;
+    align-items: center;
+    padding: .2rem;
+    /* background-color: red; */
+    width: 100%;
+    overflow: hidden;
+    border-bottom: 2px solid rgb(196, 193, 193);
+    height: 2rem;
+    margin-bottom: 1rem;
+
+
+    p {
+        width: 9%;
+        height: 100%;
+        font-weight: bold;
+        text-align: left;
+
+    }
+
+
+    p:nth-child(4) {
+        width: 4%
+    }
+
+    p:nth-child(5) {
+        width: 13%
+    }
+
+
+
+
+}

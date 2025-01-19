@@ -3,9 +3,9 @@ const router = express.Router()
 const db = require('../db')
 
 
-// Ruta para obtener todos los pacientes
-router.get('/pacientes', (req, res) => {
-    const query = 'SELECT * FROM pacientes ORDER BY fecha DESC';
+// Ruta para obtener todas las facturas
+router.get('/facturas', (req, res) => {
+    const query = 'SELECT * FROM facturacion ORDER BY fecha_emision DESC';
     db.query(query, (err, results) => {
         if (err) {
             console.error(err);

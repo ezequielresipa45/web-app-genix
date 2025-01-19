@@ -1,0 +1,72 @@
+
+
+
+
+.containerFacturacion{
+
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    background-color: antiquewhite;
+
+}
+
+
+
+
+
+.containerModuleFacturacion{
+
+
+    width: 80%;
+    background-color: white;
+    height: max-content;
+    border-radius: .5rem;
+}
+
+
+
+
+
+
+
+
+.containerDetallesFacturacion{
+
+    display: flex;
+    text-align: left;
+    border-bottom: 1px solid rgb(176, 176, 176);
+    padding: 1rem;
+    p{
+        width: 15rem;
+    }
+    
+
+
+}
+
+
+
+
+.containerGetFact{
+    display: flex;
+
+    text-align: left;
+    padding: 1rem;
+
+
+    p{
+        width: 15rem;
+        
+
+    }
+
+}
+
+
+
+
+
+
+

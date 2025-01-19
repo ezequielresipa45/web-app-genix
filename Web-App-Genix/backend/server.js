@@ -7,6 +7,8 @@ const db = require('./db')
 const createPatients = require('./routes/createPatients')
 const getPatients = require('./routes/getPatients')
 const putPatients = require('./routes/putPatients')
+const createFactura = require('./routes/createFactura')
+const getFacturas = require('./routes/getFacturas')
 
 
 
@@ -48,3 +50,50 @@ app.use(putPatients)
 
 
 
+// Obtener la info de 1 paciente
+
+app.get('/pacientes/:id', (req, res) => {
+    const { id } = req.params;
+    const query = 'SELECT * FROM pacientes WHERE id = ?';
+
+    db.query(query, [id], (err, results) => {
+        if (err) {
+            console.error('Error al obtener paciente:', err);
+            return res.status(500).send('Error al obtener paciente');
+        }
+        if (results.length === 0) {
+            return res.status(404).send('Paciente no encontrado');
+        }
+        res.status(200).json(results[0]);
+    });
+});
+
+
+// Ruta para eliminar un paciente
+app.delete('/eliminarPacientes/:id', (req, res) => {
+    const { id } = req.params;
+  
+    const query = 'DELETE FROM pacientes WHERE id = ?';
+  
+    db.query(query, [id], (err, result) => {
+      if (err) {
+        console.error('Error al eliminar el paciente:', err);
+        return res.status(500).send('Hubo un error al intentar eliminar el paciente.');
+      }
+  
+      if (result.affectedRows === 0) {
+        return res.status(404).send('Paciente no encontrado.');
+      }
+  
+      res.status(200).send('Paciente eliminado correctamente.');
+    });
+  });
+
+
+
+// Usar la ruta para crear una factura de un pacientes
+  app.use(createFactura)
+
+
+  // Usar la ruta para obtener las facturas
+  app.use(getFacturas)

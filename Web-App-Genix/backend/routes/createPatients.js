@@ -25,7 +25,7 @@ router.post('/crearPaciente', (req,res) => {
     const query = `INSERT INTO pacientes (nombre, apellido, fecha, hora, tipo_estudio, valor_estudio, estado_pago, forma_pago, fecha_pago, estado_fc)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     
-    db.query(query, [nombre, apellido, fecha, hora, tipo_estudio, valor_estudio, estado_pago, forma_pago, fecha_pago, estado_fc], (err, res) => {
+    db.query(query, [nombre, apellido, fecha, hora, tipo_estudio, valor_estudio, estado_pago, forma_pago, fecha_pago, estado_fc], (err, result) => {
         if (err) {
           console.error("Error al insertar en la base de datos:", err);
           return res.status(500).send("Hubo un error al guardar los datos.");
