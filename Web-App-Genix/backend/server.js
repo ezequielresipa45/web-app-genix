@@ -9,6 +9,9 @@ const getPatients = require('./routes/getPatients')
 const putPatients = require('./routes/putPatients')
 const createFactura = require('./routes/createFactura')
 const getFacturas = require('./routes/getFacturas')
+const crearCaja = require('./routes/createCaja')
+const getCajas = require('./routes/getCajas')
+
 
 
 
@@ -97,3 +100,29 @@ app.delete('/eliminarPacientes/:id', (req, res) => {
 
   // Usar la ruta para obtener las facturas
   app.use(getFacturas)
+
+
+
+
+  app.get('/facturas/:mes', (req, res) => {
+    const mes = req.params.mes;
+    const query = 'SELECT * FROM facturacion WHERE MONTH(fecha_emision) = ? ORDER BY fecha_emision DESC';
+    db.query(query, [mes], (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500).json({ error: 'Error al obtener pacientes' });
+        } else {
+            res.json(results);
+        }
+    });
+});
+
+
+
+// Usar la ruta para crear una caja
+app.use(crearCaja)
+
+
+
+// Usar la ruta para obtener una caja
+app.use(getCajas)

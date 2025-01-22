@@ -8,9 +8,14 @@ import Facturacion from '../pages/Facturacion';
 import './App.css'
 import ActualizarPacientes from '../pages/ActualizarPacientes';
 import FacturarPaciente from '../pages/facturarPaciente';
+import FacturacionMeses from '../pages/FacturacionMeses';
+import Proveedores from '../pages/Proveedores';
 
 
 function App() {
+
+const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre']
+
 
   return (
     <Router>
@@ -26,7 +31,24 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard/pacientes" element={<GestionDePacientes />} />
         <Route path="/dashboard/facturacion" element={<Facturacion />} />
+        <Route path="/dashboard/proveedores" element={<Proveedores />} />
+
+        
         <Route path="/dashboard/caja" element={<Caja />} />
+
+
+        {meses.map((meses, index)=>(
+
+  
+
+          <Route key={index} path={`/dashboard/facturacion/${meses}`} element={<FacturacionMeses mes = {meses}  />} />
+
+
+
+
+
+        ))}
+
 
         <Route path="/actualizarPaciente/:id" element={<ActualizarPacientes />} />
         <Route path="/facturarPaciente/:id" element={<FacturarPaciente />} />

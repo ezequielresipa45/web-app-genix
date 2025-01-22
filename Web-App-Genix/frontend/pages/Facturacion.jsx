@@ -2,6 +2,7 @@
 import styles from './facturacion.module.css'
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileInvoiceDollar, faCircleArrowLeft   } from '@fortawesome/free-solid-svg-icons';
@@ -9,7 +10,6 @@ import { faFileInvoiceDollar, faCircleArrowLeft   } from '@fortawesome/free-soli
 
 
 function Facturacion() {
-
 
   const [facturacionGenixTotal, setFacturacionGenixTotal] = useState(0)
   const [facturacionMMCTotal, setFacturacionMMCTotal] = useState(0)
@@ -82,7 +82,8 @@ function Facturacion() {
       setFacturas(facturasConNumeros)
       setSortedFacturas(facturasConNumeros); // Sincroniza con el estado ordenado
 
-      const totalGenix = facturasConNumeros.reduce((sum, factura) => factura.centro === "GENIX" && factura.forma_pago !== "DOLARES" ? sum + factura.importe_facturado : sum, 0);
+
+      const totalGenix = facturasConNumeros.reduce((sum, factura) => factura.centro === "GENIX" && factura.forma_pago !== "DOLARES"  ? sum + factura.importe_facturado : sum, 0);
       setFacturacionGenixTotal(totalGenix);
 
       const totalMMC = facturasConNumeros.reduce((sum, factura) => factura.centro === "MMC" && factura.forma_pago !== "DOLARES" ? sum + factura.importe_facturado : sum, 0);
@@ -100,8 +101,6 @@ function Facturacion() {
       const totalMMCDolares = facturasConNumeros.reduce((sum,factura)=>factura.centro === "MMC" && factura.forma_pago === "DOLARES" ? sum + factura.importe_facturado : sum,0)
       setFacturacionMMCDolares(totalMMCDolares);
 
-
-
     })
       .catch(error => {
         console.error("Error fetching pacientes: ", error)
@@ -113,6 +112,50 @@ function Facturacion() {
 
   const currentDate = new Date();
 const monthName = new Intl.DateTimeFormat('es-ES', { month: 'long' }).format(currentDate).toUpperCase();
+
+
+const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre']
+
+
+const [caja, setCaja] = useState(0)
+
+
+
+useEffect(() => {
+
+
+
+  axios.get('http://localhost:5001/cajas').then(response => {
+
+
+    const caja = response.data.map(caja => ({
+      ...caja,
+      importe: Number(caja.importe), // Usa Number o parseFloat
+    }));
+
+    const totalCaja = caja.reduce((total, item) => total + item.importe, 0); // Suma todos los valores
+    setCaja(totalCaja); // Actualiza el estado con el total
+
+    
+    console.log(totalCaja)
+  })
+  
+    
+
+  .catch(error => {
+    console.error("Error fetching pacientes: ", error)
+  })
+
+
+}, [])
+
+
+
+
+
+
+
+
 
 
 
@@ -132,6 +175,21 @@ const monthName = new Intl.DateTimeFormat('es-ES', { month: 'long' }).format(cur
 
 </div>
 
+<div className={styles.containerFacturacionMeses}>
+
+
+{meses.map((a,i)=>(
+
+  <Link key={i} className={styles.link} to={`/dashboard/facturacion/${a}`}>{a}</Link>
+
+
+))}
+
+
+
+
+</div>
+
 
 
 
@@ -139,16 +197,34 @@ const monthName = new Intl.DateTimeFormat('es-ES', { month: 'long' }).format(cur
 
 
 <div>
-  <p>Total Facturado {monthName}</p>
+  <p>Total Facturado</p>
   <p>Genix</p>
   <p>{new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionGenixTotal)}</p>
   <p>Total Efectivo: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionGenixPesos)}</p>
   <p>Total Dolares: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(facturacionGenixDolares)}</p>
 </div>
 
-<p>VER COMO HACER PARA GUARDAR LAS FACTURACIONES MENSUALES linea 149</p>
+
+
+
+  <div>
+
+    <h3>EFECTIVO TOTAL: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionGenixPesos + facturacionMMCPesos - caja)}</h3>
+
+      <h3>EGRESOS: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(caja)}</h3>
+
+
+
+
+
+  </div>
+
+
+
+
+
 <div>
-  <p>Total Facturado {monthName}</p>
+  <p>Total Facturado</p>
   <p>MMC</p>
   <p>{new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionMMCTotal)} </p>
   <p>Total Efectivo: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionMMCPesos)}</p>
@@ -163,13 +239,6 @@ const monthName = new Intl.DateTimeFormat('es-ES', { month: 'long' }).format(cur
 
 
 </div>
-
-
-
-
-
-
-
 
 
       <div className={styles.containerModuleFacturacion}>
@@ -207,7 +276,7 @@ const monthName = new Intl.DateTimeFormat('es-ES', { month: 'long' }).format(cur
 
 
 
-          <div className={styles.containerGetFact}>
+          <div key={index} className={styles.containerGetFact}>
 
             <p>{item.fecha_emision.toLocaleDateString('es-AR')}</p> {/* Formatea la fecha */}
             <p>{item.numero_fc}</p>

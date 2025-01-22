@@ -43,6 +43,23 @@ function Dashboard() {
 
 
 
+
+    const protectedNavigate = (e)=>{
+
+        e.preventDefault()
+
+        const clave = prompt("Por favor, introduce la clave")
+
+
+        clave === "Arenales1658" ? navigate("/dashboard/caja") : alert("Clave incorrecta. No puede acceder")
+
+
+
+
+
+    }
+
+
     const [pacientes, setPacientes] = useState(null)
 
 
@@ -85,7 +102,10 @@ function Dashboard() {
                     <ul>
                         <li><Link to="/dashboard/pacientes" >Pacientes</Link></li>
                         <li><Link to="/dashboard/facturacion">Facturación</Link></li>
-                        <li><Link to="/dashboard/caja">Caja</Link></li>
+                        <li><Link to="/dashboard/proveedores">Proveedores</Link></li>
+
+
+                       <button onClick={protectedNavigate}>Caja</button> 
                     </ul>
                 </nav>
                 <div>

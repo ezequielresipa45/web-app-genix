@@ -1,0 +1,77 @@
+.containerCaja {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+
+
+
+
+
+.containerH2 {
+    background-color: white;
+    margin: 0 0 2rem 0;
+    padding: 1rem 0 1rem 4rem;
+    box-shadow: 0 4px 6px rgb(235, 234, 234);
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
+
+}
+
+
+
+
+
+
+.containerForm {
+    display: flex;
+    gap: 2rem;
+
+}
+
+
+
+
+
+
+
+
+
+
+.barraDetalles {
+    display: flex;
+    margin-top: 2rem;
+    border-bottom: 1px solid rgb(219, 217, 217);
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+    color: gray;
+    width: 80%;
+
+    p {
+        width: 7rem;
+        text-align: left;
+    }
+}
+
+
+
+.containerDetallesCajas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+    border-bottom: 1px solid rgb(219, 217, 217);
+    width: 80%;
+
+    p {
+        text-align: left;
+        width: 7rem;
+
+
+    }
+}
