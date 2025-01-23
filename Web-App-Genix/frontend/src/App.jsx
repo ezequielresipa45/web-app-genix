@@ -7,7 +7,7 @@ import GestionDePacientes from '../pages/GestionDePacientes';
 import Facturacion from '../pages/Facturacion';
 import './App.css'
 import ActualizarPacientes from '../pages/ActualizarPacientes';
-import FacturarPaciente from '../pages/facturarPaciente';
+import FacturarPaciente from '../pages/FacturarPaciente';
 import FacturacionMeses from '../pages/FacturacionMeses';
 import Proveedores from '../pages/Proveedores';
 
