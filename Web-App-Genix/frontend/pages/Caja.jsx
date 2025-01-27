@@ -79,7 +79,13 @@ function Caja() {
 
 
 
+  const isAuthenticated = () => localStorage.getItem('isAuthenticated') === 'true';
+
   return (
+
+
+    isAuthenticated() ?
+
     <div className={styles.containerCaja}>
 
 
@@ -89,8 +95,8 @@ function Caja() {
 
 
 
-    
-    
+
+
 
       <h2 className={styles.containerH2}><a href="/dashboard"><FontAwesomeIcon icon={faCircleArrowLeft} /> Atras</a> Egresos Caja Grande</h2>
 
@@ -99,10 +105,13 @@ function Caja() {
 
         <input type="date" value={caja.fecha} placeholder='Fecha' onChange={(e) => { setCaja({ ...caja, fecha: e.target.value }) }} required />
         <input type="text" value={caja.detalle} placeholder='Detalle' onChange={(e) => { setCaja({ ...caja, detalle: e.target.value }) }} required />
-        <input type="number" value={caja.importe} placeholder='Importe' onChange={(e) => { setCaja({ ...caja, importe: e.target.value }) }} required />
 
-        <button onClick={agregarCaja}>Agregar</button> 
-</div> 
+
+
+        <input type="text" value={`$${caja.importe.replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`}  placeholder='Importe' onChange={(e) => {  const inputValue = e.target.value.replace(/\D/g, "");  setCaja({ ...caja, importe: inputValue }) }} required />
+
+        <button onClick={agregarCaja}>Agregar</button>
+</div>
 
 
 
@@ -137,14 +146,7 @@ function Caja() {
         ))}
 
 
-
-
-
-     
-
-
-
-          <h4>Total: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(getCaja.reduce((total, item) => total + item.importe, 0))}</h4>
+          <h4>Total: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(getCaja && getCaja.reduce((total, item) => total + item.importe, 0))}</h4>
 
 
 
@@ -168,6 +170,9 @@ function Caja() {
 
 
     </div>
+
+    : window.location.href = '/'
+
   )
 }
 

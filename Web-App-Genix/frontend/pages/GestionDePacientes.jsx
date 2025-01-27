@@ -4,7 +4,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styles from './pacientes.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash,faPen,faFileInvoiceDollar,faUserPlus   } from '@fortawesome/free-solid-svg-icons';
+import { faTrash,faPen,faFileInvoiceDollar,faUserPlus,faCircleArrowLeft   } from '@fortawesome/free-solid-svg-icons';
+
 
 
 
@@ -92,6 +93,7 @@ function GestionDePacientes() {
 
 
     window.location.reload()
+    console.log(paciente)
 
 
 
@@ -159,17 +161,19 @@ function GestionDePacientes() {
 
 
 
-
+  const isAuthenticated = () => localStorage.getItem('isAuthenticated') === 'true';
 
 
   return (
-
+    isAuthenticated() ?
     <>
 
       <div className={styles.containerPadre}>
 
 
         <div className={styles.containerButtonyH1}>
+
+        <a href="/dashboard"><FontAwesomeIcon icon={faCircleArrowLeft} /> Atras</a>
         <h1>Tabla de Pacientes</h1>
         <button onClick={mostrarModalPacientes} >  <FontAwesomeIcon icon={faUserPlus} /> Agregar Paciente</button>
 
@@ -178,22 +182,94 @@ function GestionDePacientes() {
 
 
 
-  
+
 
 
           <div style={encender ? on : off}>
 
 
-            <input type="text" value={paciente.nombre} placeholder='Nombre' onChange={(e) => { setPaciente({ ...paciente, nombre: e.target.value }) }} required />
-            <input type="text" value={paciente.apellido} placeholder='Apellido' onChange={(e) => { setPaciente({ ...paciente, apellido: e.target.value }) }} required />
-            <input type="text" value={paciente.fecha} placeholder='Fecha' onChange={(e) => { setPaciente({ ...paciente, fecha: e.target.value }) }} required />
-            <input type="email" value={paciente.hora} placeholder='Hora' onChange={(e) => { setPaciente({ ...paciente, hora: e.target.value }) }} required />
-            <input type="text" value={paciente.tipo_estudio} placeholder='Tipo De Estudi' onChange={(e) => { setPaciente({ ...paciente, tipo_estudio: e.target.value }) }} required />
-            <input type="text" value={paciente.valor_estudio} placeholder='Valor Estudio' onChange={(e) => { setPaciente({ ...paciente, valor_estudio: e.target.value }) }} required />
-            <input type="text" value={paciente.estado_pago} placeholder='Estado De Pago' onChange={(e) => { setPaciente({ ...paciente, estado_pago: e.target.value }) }} required />
-            <input type="text" value={paciente.forma_pago} placeholder='Forma de Pago' onChange={(e) => { setPaciente({ ...paciente, forma_pago: e.target.value }) }} required />
-            <input type="text" value={paciente.fecha_pago} placeholder='Fecha de Pago' onChange={(e) => { setPaciente({ ...paciente, fecha_pago: e.target.value }) }} required />
-            <input type="text" value={paciente.estado_fc} placeholder='Estado Factura' onChange={(e) => { setPaciente({ ...paciente, estado_fc: e.target.value }) }} required />
+            <input type="text" value={paciente.nombre} placeholder='Nombre' onChange={(e) => { setPaciente({ ...paciente, nombre: e.target.value.toUpperCase() }) }} required />
+
+            <input type="text" value={paciente.apellido} placeholder='Apellido' onChange={(e) => { setPaciente({ ...paciente, apellido: e.target.value.toUpperCase() }) }} required />
+
+            <input type="date" value={paciente.fecha} placeholder='Fecha' onChange={(e) => { setPaciente({ ...paciente, fecha: e.target.value }) }} required />
+
+            <input type="time" value={paciente.hora} placeholder='Hora' onChange={(e) => { setPaciente({ ...paciente, hora: e.target.value }) }} required />
+
+            <input type="text" value={paciente.tipo_estudio} placeholder='Tipo De Estudi' onChange={(e) => { setPaciente({ ...paciente, tipo_estudio: e.target.value.toUpperCase() }) }} required />
+
+            {/* <input type="text" value={paciente.valor_estudio} placeholder='Valor Estudio' onChange={(e) => { setPaciente({ ...paciente, valor_estudio: e.target.value }) }} required /> */}
+
+            <input
+  type="text"
+  value={`$${paciente.valor_estudio.replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`}
+  placeholder="Valor Estudio"
+  onChange={(e) => {
+    const inputValue = e.target.value.replace(/\D/g, ""); // Elimina caracteres no numéricos
+    setPaciente({ ...paciente, valor_estudio: inputValue });
+  }}
+  required
+/>
+
+
+
+
+
+            {/* <input type="text" value={paciente.estado_pago} placeholder='Estado De Pago' onChange={(e) => { setPaciente({ ...paciente, estado_pago: e.target.value }) }} required /> */}
+
+            <select
+  value={paciente.estado_pago}
+  onChange={(e) => { setPaciente({ ...paciente, estado_pago: e.target.value }) }}
+  required
+>
+  <option value="" disabled>Seleccionar estado de pago</option>
+  <option value="PENDIENTE">PENDIENTE</option>
+  <option value="ABONADO">ABONADO</option>
+</select>
+
+
+
+
+            {/* <input type="text" value={paciente.forma_pago} placeholder='Forma de Pago' onChange={(e) => { setPaciente({ ...paciente, forma_pago: e.target.value }) }} required /> */}
+
+
+            <select
+  value={paciente.forma_pago}
+  onChange={(e) => { setPaciente({ ...paciente, forma_pago: e.target.value }) }}
+  required
+>
+  <option value="" disabled>Seleccionar forma de pago</option>
+  <option value="DOLARES">DÓLARES</option>
+  <option value="EFECTIVO">EFECTIVO</option>
+  <option value="TARJETA DE CREDITO">TARJETA DE CRÉDITO</option>
+  <option value="TARJETA DE DEBITO">TARJETA DE DÉBITO</option>
+  <option value="TRANSFERENCIA">TRANSFERENCIA</option>
+</select>
+
+
+
+
+
+
+            <input type="date" value={paciente.fecha_pago} placeholder='Fecha de Pago' onChange={(e) => { setPaciente({ ...paciente, fecha_pago: e.target.value }) }} required />
+
+
+
+            {/* <input type="text" value={paciente.estado_fc} placeholder='Estado Factura' onChange={(e) => { setPaciente({ ...paciente, estado_fc: e.target.value }) }} required /> */}
+
+
+            <select
+                   value={paciente.estado_fc}
+                   onChange={(e) => { setPaciente({ ...paciente, estado_fc: e.target.value }) }}
+                   required>
+
+                    <option value="" disabled>Seleccionar estado</option>
+                    <option value="PENDIENTE">PENDIENTE</option>
+                    <option value="EMITIDA">EMITIDA</option>
+            </select>
+
+
+
 
             <button onClick={agregarPaciente}>Agregar</button>
 
@@ -206,7 +282,7 @@ function GestionDePacientes() {
 
 
 
-       
+
 
 
 
@@ -236,7 +312,7 @@ function GestionDePacientes() {
             Estado Factura {sortOrder === 'asc' ? '↑' : '↓'}
           </p>
           <p >Acciones </p>
-          
+
 
           </div>
 
@@ -282,7 +358,7 @@ p.estado_fc !== "EMITIDA" &&
                 <button  title="Facturación" >
                   <Link to={`/facturarPaciente/${p.id}`}><FontAwesomeIcon icon={faFileInvoiceDollar} /></Link>
                 </button>}
-                
+
 
 
 </div>
@@ -318,7 +394,7 @@ p.estado_fc !== "EMITIDA" &&
 
 
 
-
+: window.location.href = '/'
 
 
 

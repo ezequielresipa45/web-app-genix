@@ -1,13 +1,80 @@
-.container_nav{
+.containerDashboard {
+
+    background-color: rgb(226, 226, 226);
+    height: 100vh;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 
 
+    .main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        background-color: white;
+        box-shadow: 4px 0px 6px rgb(12, 12, 12);
+
+h1 {
+    margin: 0;
+        }
+
+
+    }
+
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.containerGENERAL {
+    /* background-color: violet; */
+    display: flex;
+    height: 100vh;
+
+}
+
+
+.containerDetallesPacientesProveedores {
+
+    padding: 2rem;
+    width: 80%;
+    box-sizing: border-box;
+
+    h2{
+        color: red;
+        margin: 0;
+    }
+}
+
+.container_nav {
+    padding: 2rem;
+    width: 20%;
+    background-color: rgba(136, 135, 135, 0.733);
 
     ul {
         display: flex;
-        justify-content: space-around;
-        align-items: center;
-
+        flex-direction: column;
+        gap: 3rem;
+        justify-content: center;
+        align-items: left;
         list-style-type: none;
+li a{
+    /* background-color: red; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+svg{
+    background-color: white;
+    padding: 1rem;
+    border-radius: .5rem;
+}
+
+
+}
+
     }
 
     ul li a {
@@ -19,16 +86,33 @@
     }
 }
 
-.containerPacientesHoy{
+
+
+.containerPacientesHoy {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
 }
 
 
-.containerPacientesHoy{
-    p{
-        background-color: red;
+.containerPacientesHoy {
+    padding: 3rem;
+
+    p {
         width: 8rem;
+    }
+}
+
+
+
+.containerProveedores {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+
+    p {
+        width: 10rem;
+        color: red;
     }
 }

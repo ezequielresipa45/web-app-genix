@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleArrowLeft   } from '@fortawesome/free-solid-svg-icons';
 
 function ActualizarPacientes() {
 
@@ -18,17 +20,17 @@ function ActualizarPacientes() {
           const data = await response.json();
           setPaciente(data);
           setLoading(false);
-      
+
         } catch (error){
           console.error(error);
           setLoading(false);
         }
       }
-      
+
       fetchPaciente()
-      
-  
-      
+
+
+
       }, [id])
 
 
@@ -68,9 +70,11 @@ if (!paciente) return <p>No se encontró el paciente</p>;
 
 
 
-  
+
   return (
     <div>
+
+<a href="/dashboard"><FontAwesomeIcon icon={faCircleArrowLeft} /> Atras</a>
 
 <p>Estás actualizando al paciente con ID: {id}</p>
 <p>Estás actualizando al paciente: {paciente.nombre + " " + paciente.apellido}</p>

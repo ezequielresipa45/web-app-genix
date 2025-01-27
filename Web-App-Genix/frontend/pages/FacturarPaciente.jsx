@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleArrowLeft   } from '@fortawesome/free-solid-svg-icons';
 
 
 function FacturarPaciente() {
@@ -50,16 +51,16 @@ const { id } = useParams();
           }));
 
 
-      
+
         } catch (error){
           console.error(error);
           setLoading(false);
         }
       }
-      
+
       fetchPaciente()
 
-      
+
       }, [id])
 
 
@@ -69,11 +70,11 @@ const { id } = useParams();
         try {
           const response = await axios.post('http://localhost:5001/crearFactura', pacienteFacturar);
           console.log("Datos enviados correctamente: ", response.data)
-    
+
         } catch (error) {
           console.error("Hubo un error al enviar los datos: ", error)
         }
-    
+
         setPacienteFacturar({
             fecha_emision:'',
             numero_fc:'',
@@ -83,12 +84,12 @@ const { id } = useParams();
             centro:'',
             paciente:'',
         });
-    
+
     console.log(pacienteFacturar)
         window.location.reload()
         window.location.href = '/dashboard/pacientes'
-    
-    
+
+
       }
 
 
@@ -98,14 +99,14 @@ const { id } = useParams();
 
   return (
     <div>
-
+<a href="/dashboard"><FontAwesomeIcon icon={faCircleArrowLeft} /> Atras</a>
             <h2>Datos del Paciente</h2>
 
 
 
-        
+
             { paciente &&
-  
+
 
 
 
@@ -119,7 +120,7 @@ const { id } = useParams();
 
 
 
-<input type="text" value={pacienteFacturar.fecha_emision} placeholder='Fecha Emision' onChange={(e) => { setPacienteFacturar({ ...pacienteFacturar, fecha_emision: e.target.value }) }} required />
+<input type="date" value={pacienteFacturar.fecha_emision} placeholder='Fecha Emision' onChange={(e) => { setPacienteFacturar({ ...pacienteFacturar, fecha_emision: e.target.value }) }} required />
 
 <input type="text" value={pacienteFacturar.numero_fc} placeholder='Numero de Factura' onChange={(e) => { setPacienteFacturar({ ...pacienteFacturar, numero_fc: e.target.value }) }} required />
 
@@ -132,7 +133,23 @@ const { id } = useParams();
 
 <input type="text"value={ paciente.forma_pago}  placeholder='Forma De Pago' readOnly required />
 
-<input type="text" value={pacienteFacturar.centro} placeholder='Centro' onChange={(e) => { setPacienteFacturar({ ...pacienteFacturar, centro: e.target.value }) }} required />
+
+
+{/* <input type="text" value={pacienteFacturar.centro} placeholder='Centro' onChange={(e) => { setPacienteFacturar({ ...pacienteFacturar, centro: e.target.value }) }} required /> */}
+
+
+
+<select
+  value={pacienteFacturar.centro}
+  onChange={(e) => { setPacienteFacturar({ ...pacienteFacturar, centro: e.target.value }) }}
+  required
+>
+  <option value="" disabled>Seleccionar Centro</option>
+  <option value="GENIX">GENIX</option>
+  <option value="MMC">MMC</option>
+  <option value="CDTP">CDTP</option>
+  <option value="TEC">TEC</option>
+</select>
 
 
 <button onClick={facturar}>Facturar </button>
@@ -154,14 +171,14 @@ const { id } = useParams();
 
 
 
-      
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
         </div>
   )
 }

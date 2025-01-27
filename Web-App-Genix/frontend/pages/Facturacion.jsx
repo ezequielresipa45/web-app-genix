@@ -120,35 +120,37 @@ const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto'
 const [caja, setCaja] = useState(0)
 
 
+const [retirosDolares, setRetirosDolares] = useState([]);
+
 
 useEffect(() => {
+  axios
+    .get('http://localhost:5001/cajas')
+    .then(response => {
+      const cajas = response.data.map(caja => ({
+        ...caja,
+        importe: Number(caja.importe) // Asegurarse de que el importe es numérico
+      }));
 
+      // Filtrar y calcular los totales
+      const cajasFiltradas = cajas.filter(caja => caja.detalle !== 'RETIRO DE DOLARES');
+      const totalCaja = cajasFiltradas.reduce((total, caja) => total + caja.importe, 0);
 
+      const totalRetiros = cajas
+        .filter(caja => caja.detalle === 'RETIRO DE DOLARES')
+        .reduce((total, caja) => total + caja.importe, 0);
 
-  axios.get('http://localhost:5001/cajas').then(response => {
+      // Actualizar estados
+      setCaja(totalCaja); // Total de los que no son "RETIRO DE DOLARES"
+      setRetirosDolares(totalRetiros); // Array de importes de "RETIRO DE DOLARES"
 
-
-    const caja = response.data.map(caja => ({
-      ...caja,
-      importe: Number(caja.importe), // Usa Number o parseFloat
-    }));
-
-    const totalCaja = caja.reduce((total, item) => total + item.importe, 0); // Suma todos los valores
-    setCaja(totalCaja); // Actualiza el estado con el total
-
-    
-    console.log(totalCaja)
-  })
-  
-    
-
-  .catch(error => {
-    console.error("Error fetching pacientes: ", error)
-  })
-
-
-}, [])
-
+      console.log('Total Caja:', totalCaja);
+      console.log('Retiros de Dólares:', totalRetiros);
+    })
+    .catch(error => {
+      console.error('Error fetching cajas:', error);
+    });
+}, []);
 
 
 
@@ -169,7 +171,7 @@ useEffect(() => {
 <div className={styles.containerTitulo}>
     <a href="/dashboard"><FontAwesomeIcon icon={faCircleArrowLeft} /> Atras</a>
 
-      
+
       <h2><FontAwesomeIcon icon={faFileInvoiceDollar} /> Tabla de Facturacion</h2>
 
 
@@ -196,23 +198,26 @@ useEffect(() => {
 <div className={styles.footerFact}>
 
 
-<div>
+
+
+{/* <div>
   <p>Total Facturado</p>
   <p>Genix</p>
   <p>{new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionGenixTotal)}</p>
   <p>Total Efectivo: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionGenixPesos)}</p>
   <p>Total Dolares: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(facturacionGenixDolares)}</p>
-</div>
+</div> */}
 
 
 
 
-  <div>
+  <div className={styles.containerFacturacionTotal}>
 
     <h3>EFECTIVO TOTAL: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionGenixPesos + facturacionMMCPesos - caja)}</h3>
 
+      <h3>USD TOTAL: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(facturacionGenixDolares)} </h3>
       <h3>EGRESOS: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(caja)}</h3>
-
+      <h3>RETIRO DOLARES DE GENIX: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(retirosDolares)}</h3>
 
 
 
@@ -223,7 +228,7 @@ useEffect(() => {
 
 
 
-<div>
+{/* <div>
   <p>Total Facturado</p>
   <p>MMC</p>
   <p>{new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionMMCTotal)} </p>
@@ -231,7 +236,7 @@ useEffect(() => {
   <p>Total Dolares: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(facturacionMMCDolares)}</p>
 
 
-</div>
+</div> */}
 
 
 

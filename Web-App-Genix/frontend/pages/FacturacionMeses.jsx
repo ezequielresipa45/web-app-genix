@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styles from './facturacionMeses.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { faCircleArrowLeft   } from '@fortawesome/free-solid-svg-icons';
+import { faCircleArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -16,15 +16,15 @@ function FacturacionMeses({ mes }) {
   const [facturas, setFacturas] = useState(null)
 
 
-    const [facturacionGenixTotal, setFacturacionGenixTotal] = useState(0)
-    const [facturacionMMCTotal, setFacturacionMMCTotal] = useState(0)
+  const [facturacionGenixTotal, setFacturacionGenixTotal] = useState(0)
+  const [facturacionMMCTotal, setFacturacionMMCTotal] = useState(0)
 
 
-    const [facturacionGenixPesos, setFacturacionGenixPesos] = useState(0)
-    const [facturacionMMCPesos, setFacturacionMMCPesos] = useState(0)
-  
-    const [facturacionGenixDolares, setFacturacionGenixDolares] = useState(0)
-    const [facturacionMMCDolares, setFacturacionMMCDolares] = useState(0)
+  const [facturacionGenixPesos, setFacturacionGenixPesos] = useState(0)
+  const [facturacionMMCPesos, setFacturacionMMCPesos] = useState(0)
+
+  const [facturacionGenixDolares, setFacturacionGenixDolares] = useState(0)
+  const [facturacionMMCDolares, setFacturacionMMCDolares] = useState(0)
 
 
 
@@ -64,23 +64,23 @@ function FacturacionMeses({ mes }) {
 
 
 
-      const totalGenix = facturasConNumeros.reduce((sum, factura) => factura.centro === "GENIX" && factura.forma_pago !== "DOLARES"  ? sum + factura.importe_facturado : sum, 0);
+      const totalGenix = facturasConNumeros.reduce((sum, factura) => factura.centro === "GENIX" && factura.forma_pago !== "DOLARES" ? sum + factura.importe_facturado : sum, 0);
       setFacturacionGenixTotal(totalGenix);
 
       const totalMMC = facturasConNumeros.reduce((sum, factura) => factura.centro === "MMC" && factura.forma_pago !== "DOLARES" ? sum + factura.importe_facturado : sum, 0);
       setFacturacionMMCTotal(totalMMC);
 
 
-      const totalGenixPesos = facturasConNumeros.reduce((sum,factura)=>factura.centro === "GENIX" && factura.forma_pago === "EFECTIVO" ? sum + factura.importe_facturado : sum,0)
+      const totalGenixPesos = facturasConNumeros.reduce((sum, factura) => factura.centro === "GENIX" && factura.forma_pago === "EFECTIVO" ? sum + factura.importe_facturado : sum, 0)
       setFacturacionGenixPesos(totalGenixPesos);
 
-      const totalMMCPesos = facturasConNumeros.reduce((sum,factura)=>factura.centro === "MMC" && factura.forma_pago === "EFECTIVO" ? sum + factura.importe_facturado : sum,0)
+      const totalMMCPesos = facturasConNumeros.reduce((sum, factura) => factura.centro === "MMC" && factura.forma_pago === "EFECTIVO" ? sum + factura.importe_facturado : sum, 0)
       setFacturacionMMCPesos(totalMMCPesos);
 
-      const totalGenixDolares = facturasConNumeros.reduce((sum,factura)=>factura.centro === "GENIX" && factura.forma_pago === "DOLARES" ? sum + factura.importe_facturado : sum,0)
+      const totalGenixDolares = facturasConNumeros.reduce((sum, factura) => factura.centro === "GENIX" && factura.forma_pago === "DOLARES" ? sum + factura.importe_facturado : sum, 0)
       setFacturacionGenixDolares(totalGenixDolares);
 
-      const totalMMCDolares = facturasConNumeros.reduce((sum,factura)=>factura.centro === "MMC" && factura.forma_pago === "DOLARES" ? sum + factura.importe_facturado : sum,0)
+      const totalMMCDolares = facturasConNumeros.reduce((sum, factura) => factura.centro === "MMC" && factura.forma_pago === "DOLARES" ? sum + factura.importe_facturado : sum, 0)
       setFacturacionMMCDolares(totalMMCDolares);
 
 
@@ -100,55 +100,15 @@ function FacturacionMeses({ mes }) {
   }, [facturas])
 
 
+
+  const isAuthenticated = () => localStorage.getItem('isAuthenticated') === 'true';
+
+
+
   return (
 
-
-    <>
-
-
-
-
-
-
-
-
-<div>
-
-<Link to={'/dashboard/facturacion'}> <FontAwesomeIcon icon={faCircleArrowLeft} /> ATRAS</Link>
-    <h2>{mes.toUpperCase()}</h2>
-</div>
-
-
-
-
-
-<div className={styles.footerFact}>
-
-
-<div>
-  <p>Total Facturado</p>
-  <p>Genix</p>
-  <p>{new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionGenixTotal)}</p>
-  <p>Total Efectivo: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionGenixPesos)}</p>
-  <p>Total Dolares: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(facturacionGenixDolares)}</p>
-</div>
-
-<div>
-  <p>Total Facturado</p>
-  <p>MMC</p>
-  <p>{new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionMMCTotal)} </p>
-  <p>Total Efectivo: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionMMCPesos)}</p>
-  <p>Total Dolares: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(facturacionMMCDolares)}</p>
-
-
-</div>
-
-
-
-
-
-
-</div>
+    isAuthenticated() ?
+      <>
 
 
 
@@ -157,29 +117,74 @@ function FacturacionMeses({ mes }) {
 
 
 
+        <div>
 
-
-
-
-
-
-
-      <div className={styles.containerModuleFacturacion}>
-
-        <div className={styles.containerDetallesFacturacion}>
-          <p>Fecha Emisión</p>
-          <p>N° De Factura</p>
-          <p>Paciente </p>
-          <p>Tipo De Estudio</p>
-          <p>Importe </p>
-          <p>Forma De Pago</p>
-          <p>Centro</p>
+          <Link to={'/dashboard/facturacion'}> <FontAwesomeIcon icon={faCircleArrowLeft} /> ATRAS</Link>
+          <h2>{mes.toUpperCase()}</h2>
         </div>
 
 
 
-        { facturas && facturas.map((f, i) => 
-          ( f.fecha_emision.getFullYear() === 2025 ? (
+
+
+        <div className={styles.footerFact}>
+
+
+          <div>
+            <p>Total Facturado</p>
+            <p>Genix</p>
+            <p>{new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionGenixTotal)}</p>
+            <p>Total Efectivo: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionGenixPesos)}</p>
+            <p>Total Dolares: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(facturacionGenixDolares)}</p>
+          </div>
+
+          <div>
+            <p>Total Facturado</p>
+            <p>MMC</p>
+            <p>{new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionMMCTotal)} </p>
+            <p>Total Efectivo: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionMMCPesos)}</p>
+            <p>Total Dolares: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(facturacionMMCDolares)}</p>
+
+
+          </div>
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div className={styles.containerModuleFacturacion}>
+
+          <div className={styles.containerDetallesFacturacion}>
+            <p>Fecha Emisión</p>
+            <p>N° De Factura</p>
+            <p>Paciente </p>
+            <p>Tipo De Estudio</p>
+            <p>Importe </p>
+            <p>Forma De Pago</p>
+            <p>Centro</p>
+          </div>
+
+
+
+          {facturas && facturas.map((f, i) =>
+          (f.fecha_emision.getFullYear() === 2025 ? (
 
             <div key={i} className={styles.containerGetFact}>
               <p>{f.fecha_emision.toLocaleDateString('es-AR')}</p> {/* Formatea la fecha */}
@@ -192,36 +197,16 @@ function FacturacionMeses({ mes }) {
               <p>{f.centro}</p>
             </div>
 
-) : null
+          ) : null
 
-))}
-
-
-      </div>
+          ))}
 
 
+        </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </>
-
+      </>
+      : window.location.href = '/'
 
   )
 }

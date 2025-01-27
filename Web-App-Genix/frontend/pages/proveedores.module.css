@@ -1,0 +1,28 @@
+.containerProveedores{
+    background-color: green;
+}
+
+
+
+
+
+.containerGetProveedores{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+    width: 100%;
+    padding: 1rem 1rem;
+    box-sizing: border-box;
+    background-color: red;
+
+
+
+    p{
+        text-transform: uppercase;
+        width: 80rem;
+        text-align: center;
+
+    }
+
+}

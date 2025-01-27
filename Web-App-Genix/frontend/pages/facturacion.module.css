@@ -1,17 +1,12 @@
-
-
-
-
-.containerFacturacion{
+.containerFacturacion {
 
     display: flex;
     align-items: center;
     flex-direction: column;
     background-color: #d8d8d8
-
 }
 
-.containerTitulo{
+.containerTitulo {
 
     display: flex;
     background-color: white;
@@ -22,35 +17,37 @@
     gap: 30rem;
     box-sizing: border-box;
 
-    svg  {
+    svg {
         width: 2rem;
         height: 2rem;
     }
 
-h2{
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    font-weight: bold;
+    h2 {
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        font-weight: bold;
+
+    }
+
+
+    a {
+        color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        padding: .5rem;
+        border-radius: .5rem;
+        margin: 0;
+
+    }
+
 }
 
 
-a{
-    color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    padding: .5rem;
-    border-radius: .5rem;
-    margin: 0;
-}
-
-}
 
 
 
-
-
-.footerFact{
+.footerFact {
     margin: 2rem 0;
     display: flex;
     justify-content: space-around;
@@ -58,52 +55,36 @@ a{
     align-items: center;
 
 
-    div{
-        background-color: white;
-        padding: 2rem;
-        border-radius: 0.5rem;
-        width: 20rem;
+    .containerFacturacionTotal {
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
-
-
-        p:nth-child(1){
-            font-weight: bold;
-        }
-        p:nth-child(2){
-            color: rgb(146,129,52);
-            font-size: 40px;
-            text-transform: uppercase;
-            margin: 0;
-        }
-        p:nth-child(3){
-            color: black;
-            font-size: 30px;
-            text-transform: uppercase;
-            font-weight: bold;
-            
-
-        }
-
-
+        background-color: white;
+        padding: 2rem;
+        border-radius: 0.5rem
     }
+
+    h3{
+        width: 100%;
+        text-align: left;
+    }
+
+
 }
 
 
 
 
 
-.containerFacturacionMeses{
+.containerFacturacionMeses {
 
-display: flex;
-width: 100%;
-justify-content: space-evenly;
-background-color: white;
-box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    background-color: white;
+    box-sizing: border-box;
 
-    .link{
+    .link {
         color: black;
         text-transform: capitalize;
         padding: .5rem;
@@ -127,7 +108,7 @@ box-sizing: border-box;
 
 
 
-.containerModuleFacturacion{
+.containerModuleFacturacion {
 
 
     width: 80%;
@@ -135,7 +116,6 @@ box-sizing: border-box;
     height: max-content;
     border-radius: .5rem;
     padding: 4rem;
-
     margin: 2rem 0;
 }
 
@@ -146,22 +126,24 @@ box-sizing: border-box;
 
 
 
-.containerDetallesFacturacion{
+.containerDetallesFacturacion {
 
     display: flex;
     text-align: left;
     border-bottom: 1px solid rgb(176, 176, 176);
     padding: .5rem 1rem;
     background-color: #d8d8d8;
-    
+
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
     border: 1px solid #aaa9a9;
-    p{
+
+    p {
         width: 15rem;
         text-transform: capitalize;
+
     }
-    
+
 
 
 }
@@ -169,9 +151,9 @@ box-sizing: border-box;
 
 
 
-.containerGetFact{
+.containerGetFact {
     display: flex;
-background-color: white;
+    background-color: white;
     text-align: left;
     padding: .5rem;
     border: 1px solid #cdcacac4;
@@ -180,19 +162,13 @@ background-color: white;
 
 
 
-    p{
+    p {
         width: 15rem;
         font-size: 13px;
         text-transform: uppercase;
         /* padding-bottom: 3rem; */
 
+
     }
 
 }
-
-
-
-
-
-
-

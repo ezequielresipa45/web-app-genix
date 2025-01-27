@@ -24,23 +24,16 @@ const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto'
 
         <Route path="/" element={<LoginPage />} />
 
-
-
-
-
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard/pacientes" element={<GestionDePacientes />} />
         <Route path="/dashboard/facturacion" element={<Facturacion />} />
         <Route path="/dashboard/proveedores" element={<Proveedores />} />
-
-        
         <Route path="/dashboard/caja" element={<Caja />} />
 
 
         {meses.map((meses, index)=>(
 
   
-
           <Route key={index} path={`/dashboard/facturacion/${meses}`} element={<FacturacionMeses mes = {meses}  />} />
 
 

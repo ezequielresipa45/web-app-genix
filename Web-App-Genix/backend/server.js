@@ -11,6 +11,8 @@ const createFactura = require('./routes/createFactura')
 const getFacturas = require('./routes/getFacturas')
 const crearCaja = require('./routes/createCaja')
 const getCajas = require('./routes/getCajas')
+const createProveedor = require('./routes/createProveedor')
+const putProveedores = require('./routes/putProveedores')
 
 
 
@@ -75,19 +77,19 @@ app.get('/pacientes/:id', (req, res) => {
 // Ruta para eliminar un paciente
 app.delete('/eliminarPacientes/:id', (req, res) => {
     const { id } = req.params;
-  
+
     const query = 'DELETE FROM pacientes WHERE id = ?';
-  
+
     db.query(query, [id], (err, result) => {
       if (err) {
         console.error('Error al eliminar el paciente:', err);
         return res.status(500).send('Hubo un error al intentar eliminar el paciente.');
       }
-  
+
       if (result.affectedRows === 0) {
         return res.status(404).send('Paciente no encontrado.');
       }
-  
+
       res.status(200).send('Paciente eliminado correctamente.');
     });
   });
@@ -126,3 +128,26 @@ app.use(crearCaja)
 
 // Usar la ruta para obtener una caja
 app.use(getCajas)
+
+
+// Usar la ruta para crear un proveedor
+app.use(createProveedor)
+
+
+
+
+app.get('/getProveedores', (req, res) => {
+  const query = 'SELECT * FROM proveedores  ORDER BY fecha_vencimiento DESC';
+  db.query(query, (err, results) => {
+      if (err) {
+          console.error(err);
+          res.status(500).json({ error: 'Error al obtener pacientes' });
+      } else {
+          res.json(results);
+      }
+  });
+});
+
+
+
+app.use(putProveedores)
