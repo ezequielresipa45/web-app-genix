@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from "react";
 import styles from "./dashboard.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation  } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightLong,faHospitalUser,faCashRegister,faChild,faSackDollar} from '@fortawesome/free-solid-svg-icons';
+import { faUser,faHouse,faCashRegister,faChild,faSackDollar,faCircleXmark} from '@fortawesome/free-solid-svg-icons';
+import NavBarLateral from "../components/navBarLateral";
 
 function Dashboard() {
+
+
+    const location = useLocation(); // Obtiene la ruta actual
+
+    // Función para verificar si la ruta actual coincide con el path dado
+    const isActive = (path) => location.pathname === path;
+
+
   const dateActual = new Date();
 
   const obtenerFechaHoy = () => {
@@ -31,15 +40,7 @@ function Dashboard() {
     }
   };
 
-  const protectedNavigate = (e) => {
-    e.preventDefault();
 
-    const clave = prompt("Por favor, introduce la clave");
-
-    clave === "Arenales1658"
-      ? navigate("/dashboard/caja")
-      : alert("Clave incorrecta. No puede acceder");
-  };
 
   const [pacientes, setPacientes] = useState(null);
 
@@ -75,16 +76,28 @@ function Dashboard() {
       });
   }, []);
 
+
+
+  let arrayImagenes = ['../assets/avatar_1.png','../assets/avatar_2.png','../assets/avatar_3.png','../assets/avatar_4.png','../assets/avatar_5.png','../assets/avatar_6.png','../assets/avatar_7.png','../assets/avatar_8.png','../assets/avatar_9.png',]
+
+
+
+
+/**************************************************************************************************** */
+
+
+
+
+
+
   return isAuthenticated() ? (
+
+
+
     <div className={styles.containerDashboard}>
 
 
-<div className={styles.main}>
 
-      <p>Bienvenido al panel administrativo</p>
-        <button onClick={closeSesion}>Cerrar Sesion</button>
-
-</div>
 
 
 
@@ -96,78 +109,81 @@ function Dashboard() {
 
 
 
-<nav className={styles.container_nav}>
-        <ul>
-            <p>Dashboard</p>
-
-          <li>
-            <Link to="/dashboard/pacientes"> <FontAwesomeIcon icon={faHospitalUser} />  Pacientes  <FontAwesomeIcon icon={faArrowRightLong} /> </Link>
-          </li>
-          <li>
-            <Link to="/dashboard/facturacion"> <FontAwesomeIcon icon={faCashRegister} /> Facturación  <FontAwesomeIcon icon={faArrowRightLong} /></Link>
-          </li>
-          <li>
-            <Link to="/dashboard/proveedores"> <FontAwesomeIcon icon={faChild} /> Proveedores  <FontAwesomeIcon icon={faArrowRightLong} /></Link>
-          </li>
-<li>
 
 
-          <Link onClick={protectedNavigate}> <FontAwesomeIcon icon={faSackDollar} /> CAJA  <FontAwesomeIcon icon={faArrowRightLong} /></Link>
 
-</li>
-        </ul>
-      </nav>
+<NavBarLateral/>
+
 
 
 
         <div className={styles.containerDetallesPacientesProveedores}>
-          <h2>Pacientes al día de hoy: {obtenerFechaHoy()}</h2>
-{console.log( pacientes && pacientes.length)}
+
+
+
+        <div className={styles.main}>
+
+  <button onClick={closeSesion}> Cerrar Sesion <FontAwesomeIcon icon={faCircleXmark} style={{color: "#a7372f",}} /> </button>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+          <h2>Pacientes</h2>
+          <h4>Total de pacientes: {pacientes && pacientes.length}</h4>
+
+
+
+{pacientes &&
+
+<div className={styles.titleVar}>
+
+
+
+<p>Datos paciente</p>
+<p>Visita</p>
+<p>Estudio</p>
+<p>Estado de pago</p>
+
+</div>
+
+
+
+
+}
+
+
+
+
+            {console.log( pacientes && pacientes.length)}
           {pacientes && pacientes.length > 0 ?
             pacientes.map((p, i) => (
               <div key={i} className={styles.containerPacientesHoy}>
-                <p>{p.nombre} </p>
-                <p>{p.apellido} </p>
-                <p>{p.fecha} </p>
-                <p>{p.hora} </p>
+
+
+
+<div>
+
+                <img src={arrayImagenes[i]} alt="persona" width={'50px'} />
+                <p>{p.nombre} {p.apellido} </p>
+
+</div>
+                <p>{p.fecha} || {p.hora}hs </p>
                 <p>{p.tipo_estudio} </p>
-                <p>{p.valor_estudio} </p>
-                <p>{p.estado_pago} </p>
-                <p>{p.forma_pago} </p>
-                <p>{p.fecha_pago} </p>
-                <p>{p.estado_fc} </p>
+                <p className={p.estado_pago === 'ABONADO' ? styles.abonado : styles.pendiente}>{p.estado_pago} </p>
               </div>
-            )) : (<p>No hay pacientes HOY</p>
-            )}
+            )) : ('')}
 
 
-<h3>
-    FACTURAS PROVEEDORES VENCIMIENTO HOY
-</h3>
-      {getProveedores &&
-        getProveedores.map((p, i) => {
-          const fechaVencimiento = new Date(
-            p.fecha_vencimiento
-          ).toLocaleDateString("es-AR");
-          const fechaActual = new Date(dateActual).toLocaleDateString("es-AR");
-
-          return fechaVencimiento === fechaActual && p.estado !== 'ABONADO' ? (
-            <div className={styles.containerProveedores} key={i}>
-              {" "}
-              <p>{p.fecha_vencimiento.toLocaleDateString("es-AR")}</p>{" "}
-            {/* Formatea la fecha */}
-            <p>{p.proveedor}</p>
-            <p>{p.fc_cliente}</p>
-
-            <p>
-              {new Intl.NumberFormat("es-AR", {
-                style: "currency",
-                currency: "ARS",
-              }).format(p.total)}
-            </p>{" "}
-            </div>
-          ) : null;
-        })}
 
 
 

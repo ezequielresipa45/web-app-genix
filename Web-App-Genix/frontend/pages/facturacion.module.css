@@ -1,15 +1,25 @@
 .containerFacturacion {
-
     display: flex;
-    align-items: center;
+    height: 100vh;
+    width: 100%;
+
+
+}
+
+.containerGeneral {
+
+    width: 83.4%;
+    display: flex;
     flex-direction: column;
-    background-color: #d8d8d8
+    align-items: center;
+
+
 }
 
 .containerTitulo {
 
     display: flex;
-    background-color: white;
+    /* background-color: red; */
     width: 100%;
     justify-content: left;
     padding-left: 1rem;
@@ -57,16 +67,19 @@
 
     .containerFacturacionTotal {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        width: 80%;
         align-items: center;
-        background-color: white;
         padding: 2rem;
-        border-radius: 0.5rem
+        border-radius: 0.5rem;
+        /* background-color: red; */
+
     }
 
-    h3{
+    h3 {
+        display: flex;
         width: 100%;
-        text-align: left;
+        text-align: center;
     }
 
 
@@ -81,13 +94,18 @@
     display: flex;
     width: 100%;
     justify-content: space-evenly;
-    background-color: white;
+    background-color: rgb(235, 238, 243);
     box-sizing: border-box;
 
+    padding: 1rem;
+
     .link {
-        color: black;
+        color: white;
         text-transform: capitalize;
         padding: .5rem;
+        background-color: #a3d921;
+        border-radius: .5rem;
+
 
     }
 
@@ -112,11 +130,9 @@
 
 
     width: 80%;
-    background-color: white;
     height: max-content;
     border-radius: .5rem;
     padding: 4rem;
-    margin: 2rem 0;
 }
 
 
@@ -129,17 +145,10 @@
 .containerDetallesFacturacion {
 
     display: flex;
-    text-align: left;
-    border-bottom: 1px solid rgb(176, 176, 176);
-    padding: .5rem 1rem;
-    background-color: #d8d8d8;
-
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
-    border: 1px solid #aaa9a9;
-
+    text-align: center;
+    padding: .5rem;
     p {
-        width: 15rem;
+        width: 10rem;
         text-transform: capitalize;
 
     }
@@ -153,22 +162,57 @@
 
 .containerGetFact {
     display: flex;
-    background-color: white;
-    text-align: left;
+
+    text-align: center;
     padding: .5rem;
     border: 1px solid #cdcacac4;
-    background-color: white;
 
 
 
 
     p {
-        width: 15rem;
+        width: 10rem;
         font-size: 13px;
         text-transform: uppercase;
         /* padding-bottom: 3rem; */
 
 
     }
+
+    input{
+        display: none;
+    }
+
+
+
+    .custom_file_upload {
+        display: inline-block;
+        background-color: #007bff;
+        color: white;
+        padding: 8px 0%;
+        cursor: pointer;
+        border-radius: 5px;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .custom-file-upload:hover {
+        background-color: #0056b3;
+      }
+
+
+      button{
+        padding: .5rem;
+        margin: 0 .3rem;
+        border-radius: .5rem;
+        border: none ;
+      }
+
+      button:hover{
+        cursor: pointer;
+      }
+
+
+
 
 }

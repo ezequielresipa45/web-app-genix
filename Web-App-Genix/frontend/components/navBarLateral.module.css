@@ -1,0 +1,68 @@
+.container_nav {
+    width: 20%;
+    background-color: #393947;
+    color: white;
+
+    ul {
+
+        img {
+            padding-left: 2rem;
+        }
+
+
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        justify-content: center;
+        align-items: left;
+        list-style-type: none;
+        padding: 0;
+
+
+
+
+
+        li a {
+            width: 100%;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            padding: .5rem 1rem;
+
+            svg {
+                width: 30px;
+                height: 30px;
+            }
+
+
+        }
+
+    }
+
+
+
+
+
+    ul li a {
+        font-weight: 500;
+        text-decoration: inherit;
+        text-transform: uppercase;
+    }
+
+
+
+
+    ul li:nth-child(2) {
+        margin-bottom: 1rem;
+    }
+
+
+
+}
+
+.pintadoVerde {
+    background-color: #a3d921;
+
+}

@@ -3,14 +3,110 @@ import styles from './facturacion.module.css'
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { Link } from "react-router-dom";
-
+import NavBarLateral from "../components/navBarLateral";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileInvoiceDollar, faCircleArrowLeft   } from '@fortawesome/free-solid-svg-icons';
-
+import PdfEditComponent from '../components/PdfEditComponent';
+import { pdfjs } from 'react-pdf';
 
 
 function Facturacion() {
 
+
+
+
+  const [file, setFile] = useState({
+
+myfile:'',
+id:''
+
+
+
+  });
+
+
+
+
+
+
+
+  const guardarFc = async () => {
+
+
+
+    const formData = new FormData();
+    formData.append("file", file.myfile);
+    formData.append("id", file.id); // Agregar el ID al formData
+
+
+
+    try {
+      // Enviar el objeto file al backend sin necesidad de JSON.stringify
+      const response = await axios.post('http://localhost:5001/guardarfcpdf',  formData, {
+        headers: {
+          "Content-Type": "multipart/form-data" // Especifica que estamos enviando un archivo
+        }} );
+
+
+      // Mostrar la respuesta del servidor
+      console.log("Datos enviados correctamente: ", response.data);
+
+    } catch (error) {
+      console.error("Hubo un error al enviar los datos: ", error);
+    }
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+  const descargarFc = async (id) => {
+
+
+    try {
+      const response = await axios.get(`http://localhost:5001/guardarfcpdf/${id}`, {
+        responseType: 'blob', // Esto le indica a Axios que esperamos un archivo binario
+      });
+
+      // Crear un enlace temporal para descargar el archivo
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'factura.pdf';  // Puedes personalizar el nombre del archivo descargado
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a); // Limpieza
+    } catch (error) {
+      console.error('Hubo un error al descargar el archivo:', error);
+    }
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Configurar el worker manualmente
+pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.min.js`;
   const [facturacionGenixTotal, setFacturacionGenixTotal] = useState(0)
   const [facturacionMMCTotal, setFacturacionMMCTotal] = useState(0)
 
@@ -59,13 +155,6 @@ function Facturacion() {
     setSortOrder(order);
     setSortField(field); // Actualiza el campo actual
   };
-
-
-
-
-
-
-
 
 
   useEffect(() => {
@@ -155,8 +244,15 @@ useEffect(() => {
 
 
 
+const handleChange = (e, index) => {
+  setFile({
+    ...file,
+    myfile: e.target.files[0],
+    id: index + 1
+  });
 
-
+  console.log(file)
+};
 
 
 
@@ -167,12 +263,22 @@ useEffect(() => {
   return (
     <div className={styles.containerFacturacion}>
 
+<NavBarLateral/>
+
+
+      <PdfEditComponent/>
+
+
+
+<div className={styles.containerGeneral} >
+
+
+
+
 
 <div className={styles.containerTitulo}>
-    <a href="/dashboard"><FontAwesomeIcon icon={faCircleArrowLeft} /> Atras</a>
 
 
-      <h2><FontAwesomeIcon icon={faFileInvoiceDollar} /> Tabla de Facturacion</h2>
 
 
 </div>
@@ -200,13 +306,7 @@ useEffect(() => {
 
 
 
-{/* <div>
-  <p>Total Facturado</p>
-  <p>Genix</p>
-  <p>{new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionGenixTotal)}</p>
-  <p>Total Efectivo: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionGenixPesos)}</p>
-  <p>Total Dolares: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(facturacionGenixDolares)}</p>
-</div> */}
+
 
 
 
@@ -228,15 +328,7 @@ useEffect(() => {
 
 
 
-{/* <div>
-  <p>Total Facturado</p>
-  <p>MMC</p>
-  <p>{new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionMMCTotal)} </p>
-  <p>Total Efectivo: {new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(facturacionMMCPesos)}</p>
-  <p>Total Dolares: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(facturacionMMCDolares)}</p>
 
-
-</div> */}
 
 
 
@@ -273,6 +365,8 @@ useEffect(() => {
             Centro {sortField === 'centro' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}
           </p>
 
+          <p>Cargar Factura</p>
+
         </div>
 
 
@@ -282,7 +376,6 @@ useEffect(() => {
 
 
           <div key={index} className={styles.containerGetFact}>
-
             <p>{item.fecha_emision.toLocaleDateString('es-AR')}</p> {/* Formatea la fecha */}
             <p>{item.numero_fc}</p>
             <p>{item.paciente}</p>
@@ -291,6 +384,51 @@ useEffect(() => {
                  :new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(item.importe_facturado)}</p>
             <p>{item.forma_pago}</p>
             <p>{item.centro}</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{ file.id ?
+
+
+
+(
+<>
+<button onClick={guardarFc}>Cargar Fc</button>
+<button onClick={()=>{descargarFc(index+1)}}>Abrir Fc </button>
+
+</>
+
+
+
+      )
+
+      :(
+
+        <>
+
+
+<label htmlFor="file-upload" className={styles.custom_file_upload}>Seleccionar archivo</label>
+<input
+type="file"
+id = "file-upload"
+accept="application/pdf"
+onChange={(e) => handleChange(e,index)}/>
+ </>
+
+)
+
+
+            }
 
 
           </div>
@@ -305,6 +443,16 @@ useEffect(() => {
 
 
       </div>
+
+
+
+
+
+
+
+
+</div>
+
 
 
 

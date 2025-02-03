@@ -1,26 +1,69 @@
 .containerPadre {
-    background-color: rgb(221, 235, 244);
+    background-color: white;
     height: 100vh;
     width: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
     overflow: hidden;
+    position: relative;
 
 
 }
 
 
-.containerButtonyH1 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 3rem;
-    padding: 1rem;
+.containerPadreEdit{
+background-color: rgba(0, 0, 0, 0.608);
 
-    h1 {
-        margin: 0;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    position: relative;
+
+
+    p{color: black}
+
+
+    .container_pacientes:nth-child(even) {
+        background-color: rgba(0, 0, 0, 0.399);
+
+
     }
+
+    .container_tabla{background-color: rgba(0, 0, 0, 0.496);}
+}
+
+
+.containerButton {
+    display: flex;
+    justify-content:right;
+    align-items: center;
+    background-color: #a9a9db23;
+
+    padding: 1rem;
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 5rem;
+    gap: 3rem;
+}
+
+.buttonPatients {
+    background-color: #a3d921;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+    display: flex;
+    gap: .5rem;
+    padding: 1rem;
+    border-radius: .5rem;
+    border: none;
+
+}
+
+
+.buttonPatients:hover{
+    cursor: pointer;
 }
 
 
@@ -35,49 +78,74 @@ a {
 
 
 .containerPacientesPadre {
-    width: 90%;
     overflow-y: auto;
     overflow-x: hidden;
-    height: max-content;
-
-    padding: 1rem;
-    background-color: white;
-    border-radius: .5rem;
+    width: 100%;
 }
 
 
 
 .container_pacientes {
-    background-color: white;
+    /* background-color: violet; */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: .2rem;
+    padding: 2rem;
     width: 100%;
-    text-align: left;
     height: 2.5rem;
 
-    p {
+    box-sizing: border-box;
 
-        display: flex;
-        align-content: center;
-        width: 8%;
-        /* background-color: red; */
+    p {
+        font-size: 12px;
+        width: 5rem;
         text-transform: uppercase;
         text-align: left;
     }
 
 
+    p:nth-child(1) {
+        width: 8%
+    }
 
+    p:nth-child(2) {
+        width: 8%
+    }
+
+
+
+    p:nth-child(3) {
+        width: 7%
+    }
+
+    p:nth-child(9) {
+        width: 7%
+    }
 
     p:nth-child(4) {
         width: 3%
     }
 
-    p:nth-child(5) {
-        width: 12%
+    p:nth-child(6) {
+        width: 8%
     }
 
+    p:nth-child(5) {
+        width: 18%;
+        padding: 0 2rem;
+    }
+
+    p:nth-child(8) {
+        width: 12%;
+    }
+
+    p:nth-child(7) {
+        width: 8%
+    }
+
+    p:nth-child(10) {
+        width: 8%
+    }
 
 
 
@@ -94,54 +162,153 @@ a {
 
 
 .containerButtons {
-    width: 12rem;
+    width: 6rem;
     display: flex;
-    justify-content: left;
+    justify-content: right;
     align-items: center;
     gap: 1rem;
-
-
-button:nth-child(1){
-    background-color: rgb(107, 132, 195);
+button{
+    border: none;
+    background-color: transparent;
 }
-
-button:nth-child(2){
-    background-color: rgb(196, 96, 96);
+button:hover{
+cursor: pointer;
 }
-
 
 
 }
 
 
-.container_tabla {
-    color: black;
-    display: flex;
-    align-items: center;
-    padding: .2rem;
-    /* background-color: red; */
-    width: 100%;
-    overflow: hidden;
-    border-bottom: 2px solid rgb(196, 193, 193);
-    height: 2rem;
-    margin-bottom: 1rem;
+
+.container_nav {
+    width: 20%;
+    background-color: #393947;
+    color: white;
+
+    ul {
+
+        img {
+            padding-left: 2rem;
+        }
 
 
-    p {
-        width: 9%;
-        height: 100%;
-        font-weight: bold;
-        text-align: left;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        justify-content: center;
+        align-items: left;
+        list-style-type: none;
+        padding: 0;
+
+
+
+
+
+        li a {
+            width: 100%;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            padding: .5rem 1rem;
+
+            svg {
+                width: 30px;
+                height: 30px;
+            }
+
+
+        }
 
     }
 
 
+
+
+
+    ul li a {
+        font-weight: 500;
+        text-decoration: inherit;
+        text-transform: uppercase;
+    }
+
+
+
+
+    ul li:nth-child(2) {
+        margin-bottom: 1rem;
+    }
+
+
+
+}
+
+
+.pintadoVerde {
+    background-color: #a3d921;
+
+}
+
+.container_tabla {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    width: 100%;
+    height: 2.5rem;
+    box-sizing: border-box;
+
+    p {
+        font-weight: bold;
+        width: 5rem;
+        text-transform: uppercase;
+        text-align: left;
+    }
+
+
+    p:nth-child(1) {
+        width: 8%
+    }
+
+    p:nth-child(2) {
+        width: 8%
+    }
+
+
+
+    p:nth-child(3) {
+        width: 7%
+    }
+
+    p:nth-child(9) {
+        width: 7%
+    }
+
     p:nth-child(4) {
-        width: 4%
+        width: 3%
+    }
+
+    p:nth-child(6) {
+        width: 8%
     }
 
     p:nth-child(5) {
-        width: 13%
+        width: 18%;
+        padding: 0 2rem;
+    }
+
+    p:nth-child(8) {
+        width: 12%;
+    }
+
+    p:nth-child(7) {
+        width: 8%
+    }
+
+    p:nth-child(10) {
+        width: 8%
     }
 
 

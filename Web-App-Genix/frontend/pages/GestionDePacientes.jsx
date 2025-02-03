@@ -1,15 +1,23 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styles from './pacientes.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash,faPen,faFileInvoiceDollar,faUserPlus,faCircleArrowLeft   } from '@fortawesome/free-solid-svg-icons';
+import { faTrash,faPen,faFileInvoiceDollar,faUserPlus,faCircleArrowLeft,faChild,faCashRegister,faUser,faHouse,faSackDollar  } from '@fortawesome/free-solid-svg-icons';
 
 
 
 
 function GestionDePacientes() {
+
+
+
+
+
+
+
+
 
 
 
@@ -121,8 +129,18 @@ function GestionDePacientes() {
 
   const on = {
 
-    display: "inline-block"
-
+    display: "flex",
+    position: "absolute",
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems:'center',
+        top: 80, /* Puedes ajustar la posición */
+    left: '35%',
+    width: '40%',
+    height: '80%',
+    backgroundColor: 'white',
+    border:'1px solid black',
+    borderRadius:'1rem'
   }
 
   const off = {
@@ -161,23 +179,100 @@ function GestionDePacientes() {
 
 
 
+
   const isAuthenticated = () => localStorage.getItem('isAuthenticated') === 'true';
+
+  const location = useLocation(); // Obtiene la ruta actual
+
+  // Función para verificar si la ruta actual coincide con el path dado
+  const isActive = (path) => location.pathname === path;
+
+  const protectedNavigate = (e) => {
+    e.preventDefault();
+
+    const clave = prompt("Por favor, introduce la clave");
+
+    clave === "Arenales1658"
+      ? navigate("/dashboard/caja")
+      : alert("Clave incorrecta. No puede acceder");
+  };
+
+
+
 
 
   return (
     isAuthenticated() ?
     <>
 
-      <div className={styles.containerPadre}>
+      <div className={encender ? styles.containerPadreEdit : styles.containerPadre}>
 
 
-        <div className={styles.containerButtonyH1}>
 
-        <a href="/dashboard"><FontAwesomeIcon icon={faCircleArrowLeft} /> Atras</a>
-        <h1>Tabla de Pacientes</h1>
-        <button onClick={mostrarModalPacientes} >  <FontAwesomeIcon icon={faUserPlus} /> Agregar Paciente</button>
 
-        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+<nav className={styles.container_nav}>
+        <ul>
+            <img src="../assets/pngwing.com.png" alt="logo" width={150} />
+
+            <li >
+            <Link to="/dashboard/"> <FontAwesomeIcon icon={faHouse} style={{color: "#ffffff",}} /> Inicio   </Link>
+          </li>
+
+          <li className={isActive("/dashboard/pacientes") ? styles.pintadoVerde : ""}>
+            <Link to="/dashboard/pacientes"> <FontAwesomeIcon icon={faUser} style={{color: "#ffffff",}} />  Pacientes   </Link>
+          </li>
+          <li>
+            <Link to="/dashboard/facturacion"> <FontAwesomeIcon icon={faCashRegister} /> Facturación  </Link>
+          </li>
+          <li>
+            <Link to="/dashboard/proveedores"> <FontAwesomeIcon icon={faChild} /> Proveedores  </Link>
+          </li>
+            <li>
+
+
+          <Link onClick={protectedNavigate}> <FontAwesomeIcon icon={faSackDollar} /> CAJA </Link>
+
+        </li>
+        </ul>
+</nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -186,6 +281,8 @@ function GestionDePacientes() {
 
 
           <div style={encender ? on : off}>
+
+
 
 
             <input type="text" value={paciente.nombre} placeholder='Nombre' onChange={(e) => { setPaciente({ ...paciente, nombre: e.target.value.toUpperCase() }) }} required />
@@ -294,6 +391,26 @@ function GestionDePacientes() {
 
 
         <div className={styles.containerPacientesPadre}>
+
+
+
+
+        <div className={styles.containerButton}>
+
+        <button className={styles.buttonPatients} onClick={mostrarModalPacientes} >  <FontAwesomeIcon icon={faUserPlus} />   Agregar Paciente</button>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
         <div className={styles.container_tabla}>
 
         <p >Nombre </p>
@@ -309,7 +426,7 @@ function GestionDePacientes() {
             onClick={() => handleSort()}
             style={{ cursor: 'pointer' }}
           >
-            Estado Factura {sortOrder === 'asc' ? '↑' : '↓'}
+          Factura {sortOrder === 'asc' ? '↑' : '↓'}
           </p>
           <p >Acciones </p>
 
@@ -337,7 +454,7 @@ p.estado_fc !== "EMITIDA" &&
               <p >{p.fecha} </p>
               <p >{p.hora} </p>
               <p >{p.tipo_estudio} </p>
-              <p >{p.valor_estudio} </p>
+              <p >{new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(p.valor_estudio)}</p>
               <p >{p.estado_pago} </p>
               <p >{p.forma_pago} </p>
               <p >{p.fecha_pago} </p>

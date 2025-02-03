@@ -10,6 +10,7 @@ import ActualizarPacientes from '../pages/ActualizarPacientes';
 import FacturarPaciente from '../pages/FacturarPaciente';
 import FacturacionMeses from '../pages/FacturacionMeses';
 import Proveedores from '../pages/Proveedores';
+import FacturasPdf from '../pages/facturasPdf';
 
 
 function App() {
@@ -29,11 +30,12 @@ const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto'
         <Route path="/dashboard/facturacion" element={<Facturacion />} />
         <Route path="/dashboard/proveedores" element={<Proveedores />} />
         <Route path="/dashboard/caja" element={<Caja />} />
+        <Route path={`/dashboard/facturacion/${meses}`} element={<FacturasPdf />} />
 
 
         {meses.map((meses, index)=>(
 
-  
+
           <Route key={index} path={`/dashboard/facturacion/${meses}`} element={<FacturacionMeses mes = {meses}  />} />
 
 

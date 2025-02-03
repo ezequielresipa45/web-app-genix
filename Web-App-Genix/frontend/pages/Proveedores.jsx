@@ -4,6 +4,8 @@ import styles from "./proveedores.module.css";
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileInvoiceDollar, faCircleArrowLeft   } from '@fortawesome/free-solid-svg-icons';
+import NavBarLateral from "../components/navBarLateral";
+
 
 function Proveedores() {
   const isAuthenticated = () =>
@@ -107,6 +109,9 @@ function Proveedores() {
 
   return isAuthenticated() ? (
     <div className={styles.containerProveedores}>
+
+
+    <NavBarLateral/>
 
 <a href="/dashboard"><FontAwesomeIcon icon={faCircleArrowLeft} /> Atras</a>
       <h2>Proveedores</h2>
